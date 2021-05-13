@@ -61,7 +61,7 @@ namespace Server_Client_Communication_WCF_Grpc
             if (ServiceSecurityContext.Current != null)
                 if (ServiceSecurityContext.Current.PrimaryIdentity.IsAuthenticated)
                 {
-                    username = SecurityContext.WindowsIdentity.Name;
+                    username = SecurityContext.PrimaryIdentity.Name; //  WindowsIdentity.Name; was only suppoted on Windows 
                     isAuth = true;
                 }
                 else
