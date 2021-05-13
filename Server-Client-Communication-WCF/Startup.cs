@@ -1,6 +1,6 @@
 ﻿using CoreWCF;
 using CoreWCF.Configuration;
-using Microsoft.AspNetCore.Authentication.Negotiate;
+//using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +12,7 @@ namespace Server_Client_Communication_WCF_Grpc
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(NegotiateDefaults.AuthenticationScheme).AddNegotiate();
+            //services.AddAuthentication(NegotiateDefaults.AuthenticationScheme).AddNegotiate();
 
             services.AddServiceModelServices();
         }
@@ -32,7 +32,7 @@ namespace Server_Client_Communication_WCF_Grpc
                 binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
             }
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.UseServiceModel(builder =>
             {
