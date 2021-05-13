@@ -13,6 +13,7 @@ namespace Server_Client_Communication_WCF_Grpc
     {
         public double Action(Inputs A)
         {
+            (bool isAuth, string User) = SecurityValidation.IsAuth(OperationContext.Current.ServiceSecurityContext);
             switch (A.Operation)
             {
                 case Inputs.OperationEnum.Addition:
@@ -28,6 +29,7 @@ namespace Server_Client_Communication_WCF_Grpc
 
         public double Add(double A, double B)
         {
+            (bool isAuth, string User) = SecurityValidation.IsAuth(OperationContext.Current.ServiceSecurityContext);
             var C = A + B; 
             Console.WriteLine("{0} {1} {2} = {3}", A, nameof(Add), B, C); 
             return C; 
@@ -35,6 +37,7 @@ namespace Server_Client_Communication_WCF_Grpc
 
         public double multiply(double A, double B)
         {
+            (bool isAuth, string User) = SecurityValidation.IsAuth(OperationContext.Current.ServiceSecurityContext);
             var C = A * B;
             Console.WriteLine("{0} {1} {2} = {3}", A, nameof(multiply), B, C);
             return C;
@@ -42,9 +45,30 @@ namespace Server_Client_Communication_WCF_Grpc
 
         public double Substract(double A, double B)
         {
+            (bool isAuth, string User) = SecurityValidation.IsAuth(OperationContext.Current.ServiceSecurityContext);
             var C = A - B;
             Console.WriteLine("{0} {1} {2} = {3}", A, nameof(Substract), B, C);
             return C;
+        }
+    }
+
+    class SecurityValidation
+    {
+        public static (bool isAuth ,string username) IsAuth(ServiceSecurityContext SecurityContext)
+        {
+            string username = "Anonymous";
+            bool isAuth = false;
+            if (ServiceSecurityContext.Current != null)
+                if (ServiceSecurityContext.Current.PrimaryIdentity.IsAuthenticated)
+                {
+                    username = SecurityContext.WindowsIdentity.Name;
+                    isAuth = true;
+                }
+                else
+                    username = "Anonymous";
+
+            Console.WriteLine("User: {0} isAuth: {1}", username, isAuth);
+            return (isAuth, username); 
         }
     }
 }
