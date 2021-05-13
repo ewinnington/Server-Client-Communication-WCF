@@ -11,8 +11,9 @@ namespace WCF_client_windows
         {
             NetTcpBinding binding = new NetTcpBinding();
             binding.TransferMode = TransferMode.Streamed;
-            binding.Security.Mode = SecurityMode.Transport;
-            binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+            binding.Security.Mode = SecurityMode.None; 
+            //binding.Security.Mode = SecurityMode.Transport;
+           // binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
 
             EndpointAddress endpointAddress = new EndpointAddress(@"net.tcp://localhost:8089/nettcp");
             ICalculate client = ChannelFactory<ICalculate>.CreateChannel(binding, endpointAddress);  //new MyClientImplementation(NetTcp, BaseAddress);

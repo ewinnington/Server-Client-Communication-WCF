@@ -16,17 +16,18 @@ namespace Server_Client_Communication_WCF_Grpc
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            NetTcpBinding netTcpBinding = new NetTcpBinding();
-            netTcpBinding.TransferMode = TransferMode.Streamed;
-            netTcpBinding.Security.Mode = SecurityMode.Transport;
-            netTcpBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows; 
+            NetTcpBinding binding = new NetTcpBinding();
+            binding.TransferMode = TransferMode.Streamed;
+            binding.Security.Mode = SecurityMode.None;
+            // netTcpBinding.Security.Mode = SecurityMode.Transport;
+            // netTcpBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows; 
 
 
             app.UseServiceModel(builder =>
             {
                 builder
                     .AddService<CalculateService>()
-                    .AddServiceEndpoint<CalculateService, ClientCommunication.Interfaces.ICalculate>(netTcpBinding, "/nettcp");
+                    .AddServiceEndpoint<CalculateService, ClientCommunication.Interfaces.ICalculate>(binding, "/nettcp");
             });
         }
     }

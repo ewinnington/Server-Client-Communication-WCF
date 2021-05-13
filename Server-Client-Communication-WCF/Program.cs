@@ -13,6 +13,9 @@ namespace Server_Client_Communication_WCF_Grpc
         static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
+
+            Console.WriteLine("Starting up ------");
+
             host.Run();
         }
 
